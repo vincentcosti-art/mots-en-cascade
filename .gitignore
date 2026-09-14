@@ -10,3 +10,11 @@ android/app/build/
 !scripts/*.mjs
 !src/**/*.js
 livrables-mots-en-cascade-v2/
+*.jks
+*.keystore
+*.p12
+*.pfx
+*.pem
+INFORMATIONS-CLE-IMPORTATION.txt
+SAUVEGARDE-PRIVEE-CLE-IMPORTATION.zip
+*.aab
