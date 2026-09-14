@@ -138,7 +138,7 @@ jobs:
           manifest_tree="$RUNNER_TEMP/mots-en-cascade-AndroidManifest.xmltree"
           unzip -p "$aab" base/manifest/AndroidManifest.xml > "$manifest"
           test -s "$manifest"
-          "$aapt2_bin" dump xmltree "$manifest" > "$manifest_tree"
+          "$aapt2_bin" dump xmltree --file "$manifest" > "$manifest_tree"
           grep -q 'package="com.vincentcosti.motsencascade"' "$manifest_tree"
           grep -Eq 'android:versionCode.*(0x2|=2)' "$manifest_tree"
           grep -q 'android:versionName.*"2.0.0"' "$manifest_tree"
