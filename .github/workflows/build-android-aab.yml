@@ -130,20 +130,16 @@ jobs:
           aab='android/app/build/outputs/bundle/release/app-release.aab'
           test -f "$aab"
 
-          sdk_root="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-}}"
-          test -n "$sdk_root"
-          aapt2_bin="$(find "$sdk_root/build-tools" -type f -name aapt2 -perm -111 -print 2>/dev/null | sort -V | tail -n 1)"
-          test -n "$aapt2_bin"
-          manifest="$RUNNER_TEMP/mots-en-cascade-AndroidManifest.xml"
-          manifest_container="$RUNNER_TEMP/mots-en-cascade-manifest.apk"
-          manifest_tree="$RUNNER_TEMP/mots-en-cascade-AndroidManifest.xmltree"
-          unzip -p "$aab" base/manifest/AndroidManifest.xml > "$manifest"
-          test -s "$manifest"
-          (cd "$RUNNER_TEMP" && zip -q -j "$manifest_container" "$manifest")
-          "$aapt2_bin" dump xmltree "$manifest_container" --file AndroidManifest.xml > "$manifest_tree"
-          grep -q 'package="com.vincentcosti.motsencascade"' "$manifest_tree"
-          grep -Eq 'android:versionCode.*(0x2|=2)' "$manifest_tree"
-          grep -q 'android:versionName.*"2.0.0"' "$manifest_tree"
+          bundletool_version='1.18.3'
+          bundletool_jar="$RUNNER_TEMP/bundletool-all-${bundletool_version}.jar"
+          bundletool_url="https://github.com/google/bundletool/releases/download/${bundletool_version}/bundletool-all-${bundletool_version}.jar"
+          curl --fail --silent --show-error --location --retry 3 --output "$bundletool_jar" "$bundletool_url"
+          test -s "$bundletool_jar"
+          manifest_report="$RUNNER_TEMP/mots-en-cascade-bundle-manifest.xml"
+          java -jar "$bundletool_jar" dump manifest --bundle="$aab" > "$manifest_report"
+          grep -q 'package="com.vincentcosti.motsencascade"' "$manifest_report"
+          grep -q 'android:versionCode="2"' "$manifest_report"
+          grep -q 'android:versionName="2.0.0"' "$manifest_report"
 
           signature_report="$RUNNER_TEMP/mots-en-cascade-jarsigner.txt"
           jarsigner -verify -verbose -certs "$aab" > "$signature_report"
