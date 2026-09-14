@@ -146,7 +146,7 @@ jobs:
           signature_report="$RUNNER_TEMP/mots-en-cascade-jarsigner.txt"
           jarsigner -verify -verbose -certs "$aab" > "$signature_report"
           grep -q 'jar verified\.' "$signature_report"
-          cert_sha1="$(keytool -printcert -jarfile "$aab" 2>/dev/null | awk -F': ' '/^SHA1:/{print $2; exit}')"
+          cert_sha1="$(keytool -printcert -jarfile "$aab" 2>/dev/null | awk -F': ' '/^[[:space:]]*SHA1:/{print $2; exit}')"
           test "$cert_sha1" = "$EXPECTED_SHA1"
 
           sha256="$(sha256sum "$aab" | awk '{print $1}')"
