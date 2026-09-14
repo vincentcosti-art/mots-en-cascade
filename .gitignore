@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.gradle-home/
+android/.gradle/
+android/build/
+android/app/build/
+*.tsbuildinfo
+*.js
+*.d.ts
+!scripts/*.mjs
+!src/**/*.js
+livrables-mots-en-cascade-v2/

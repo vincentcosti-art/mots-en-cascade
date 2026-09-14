@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="500" viewBox="0 0 1024 500">
+  <rect width="1024" height="500" rx="32" fill="#d9efcf"/>
+  <circle cx="832" cy="120" r="180" fill="#b9e7ad"/>
+  <text x="72" y="188" fill="#18332d" font-family="sans-serif" font-size="58" font-weight="700">Mots en Cascade</text>
+  <text x="76" y="256" fill="#557066" font-family="sans-serif" font-size="27">6 familles · 24 mots · 500 niveaux</text>
+  <g transform="translate(730 116) rotate(-14)"><rect width="108" height="108" rx="25" fill="#18332d"/><text x="34" y="74" fill="#d9efcf" font-family="sans-serif" font-size="50" font-weight="700">A</text></g>
+  <g transform="translate(820 206) rotate(-14)"><rect width="108" height="108" rx="25" fill="#fffdf8"/><text x="34" y="74" fill="#5a8c69" font-family="sans-serif" font-size="50" font-weight="700">B</text></g>
+</svg>
