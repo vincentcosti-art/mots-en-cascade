@@ -138,9 +138,10 @@ jobs:
           package_name="$(java -jar "$bundletool_jar" dump manifest --bundle="$aab" --xpath=/manifest/@package)"
           version_code="$(java -jar "$bundletool_jar" dump manifest --bundle="$aab" --xpath=/manifest/@android:versionCode)"
           version_name="$(java -jar "$bundletool_jar" dump manifest --bundle="$aab" --xpath=/manifest/@android:versionName)"
-          test "$package_name" = 'com.vincentcosti.motsencascade'
-          test "$version_code" = '2'
-          test "$version_name" = '2.0.0'
+          echo "Bundle manifest identity: package=$package_name versionCode=$version_code versionName=$version_name"
+          test "$package_name" = 'com.vincentcosti.motsencascade' || { echo "::error::Unexpected package in AAB"; exit 1; }
+          test "$version_code" = '2' || { echo "::error::Unexpected versionCode in AAB"; exit 1; }
+          test "$version_name" = '2.0.0' || { echo "::error::Unexpected versionName in AAB"; exit 1; }
 
           signature_report="$RUNNER_TEMP/mots-en-cascade-jarsigner.txt"
           jarsigner -verify -verbose -certs "$aab" > "$signature_report"
