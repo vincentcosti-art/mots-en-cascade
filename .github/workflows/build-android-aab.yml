@@ -135,11 +135,12 @@ jobs:
           bundletool_url="https://github.com/google/bundletool/releases/download/${bundletool_version}/bundletool-all-${bundletool_version}.jar"
           curl --fail --silent --show-error --location --retry 3 --output "$bundletool_jar" "$bundletool_url"
           test -s "$bundletool_jar"
-          manifest_report="$RUNNER_TEMP/mots-en-cascade-bundle-manifest.xml"
-          java -jar "$bundletool_jar" dump manifest --bundle="$aab" > "$manifest_report"
-          grep -q 'package="com.vincentcosti.motsencascade"' "$manifest_report"
-          grep -q 'android:versionCode="2"' "$manifest_report"
-          grep -q 'android:versionName="2.0.0"' "$manifest_report"
+          package_name="$(java -jar "$bundletool_jar" dump manifest --bundle="$aab" --xpath=/manifest/@package)"
+          version_code="$(java -jar "$bundletool_jar" dump manifest --bundle="$aab" --xpath=/manifest/@android:versionCode)"
+          version_name="$(java -jar "$bundletool_jar" dump manifest --bundle="$aab" --xpath=/manifest/@android:versionName)"
+          test "$package_name" = 'com.vincentcosti.motsencascade'
+          test "$version_code" = '2'
+          test "$version_name" = '2.0.0'
 
           signature_report="$RUNNER_TEMP/mots-en-cascade-jarsigner.txt"
           jarsigner -verify -verbose -certs "$aab" > "$signature_report"
